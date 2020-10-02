@@ -1,4 +1,4 @@
-# Import libraries and modules
+"""# Import libraries and modules
 from Bio import Align
 import pandas as pd
 
@@ -35,7 +35,7 @@ while ii+1 < len(lst):
     if adjustedScore >= 0.99:
         print(X," : ", Y, '=',adjustedScore)
         print(len(lst))
-    ii = ii + 1
+    ii = ii + 1"""
 
 #######################################################
 def param(xx, yy, zz, qq,cc):
@@ -61,13 +61,14 @@ def param(xx, yy, zz, qq,cc):
         # obtain a % of similarity
         adjustedScore = score / denom 
 
-         #alignments = aligner.align(X,Y)
-
+        #alignments = aligner.align(X,Y)
+        newLst = []
         if adjustedScore >= cc:
-            print(X," : ", Y, '=',adjustedScore)
-            print(len(lst))
+            newLst.append(list(X,":", Y, adjustedScore))
+            newLst.sort(reverse=True)
         ii = ii + 1
-    
+    return newLst
+
 def main(inputFile):
     # read in the data
     df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
