@@ -37,7 +37,20 @@ while ii+1 < len(lst):
         print(len(lst))
     ii = ii + 1
 
+#######################################################
+def param(xx, yy, zz, qq):
+    aligner.match_score = xx
+    aligner.mismatch_score = yy
+    aligner.open_gap_score = zz
+    aligner.gap_score = qq
+    return xx, yy, zz, qq
+
+
 def main():
+    # read in the data
+    df = pd.read_csv('all.tsv', header=None, delimiter=r"\s+")
+    lst = df.iloc[1:, 0].tolist()
+    
     xx = input("Please enter the score for a matching character: ")
     yy = input("Please enter the penalty for mismatched characters: ")
     zz = input("Please enter the penalty for the opening of a gap: ")
