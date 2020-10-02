@@ -38,7 +38,10 @@ while ii+1 < len(lst):
     ii = ii + 1"""
 
 #######################################################
-def param(xx, yy, zz, qq,cc):
+from Bio import Align
+import pandas as pd
+
+def param(xx, yy, zz, qq, cc):
     # create the aligner object
     aligner = Align.PairwiseAligner()
 
@@ -80,3 +83,6 @@ def main(inputFile):
     qq = input("Please enter the penalty for the continuation of a gap: ")
 
     cc = input("Please input the cut off percentage: ")
+
+    output = param(xx, yy, zz, qq, cc)
+    print(output)
