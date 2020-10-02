@@ -38,20 +38,44 @@ while ii+1 < len(lst):
     ii = ii + 1
 
 #######################################################
-def param(xx, yy, zz, qq):
+def param(xx, yy, zz, qq,cc):
+    # create the aligner object
+    aligner = Align.PairwiseAligner()
+
     aligner.match_score = xx
     aligner.mismatch_score = yy
     aligner.open_gap_score = zz
     aligner.gap_score = qq
-    return xx, yy, zz, qq
 
+    ii = 0
+    while ii+1 < len(lst):
+        X = lst[ii]
+        Y = lst[ii + 1]
+    
+        #obtain the score
+        score = aligner.score(X,Y)
+    
+        # obtain the the variable of greatest length
+        denom = max(len(X),len(Y))
+    
+        # obtain a % of similarity
+        adjustedScore = score / denom 
 
-def main():
+         #alignments = aligner.align(X,Y)
+
+        if adjustedScore >= cc:
+            print(X," : ", Y, '=',adjustedScore)
+            print(len(lst))
+        ii = ii + 1
+    
+def main(inputFile):
     # read in the data
-    df = pd.read_csv('all.tsv', header=None, delimiter=r"\s+")
+    df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
     lst = df.iloc[1:, 0].tolist()
     
     xx = input("Please enter the score for a matching character: ")
     yy = input("Please enter the penalty for mismatched characters: ")
     zz = input("Please enter the penalty for the opening of a gap: ")
     qq = input("Please enter the penalty for the continuation of a gap: ")
+
+    cc = input("Please input the cut off percentage: ")
