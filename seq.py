@@ -37,3 +37,4 @@ while ii+1 < len(lst):
         print(len(lst))
     ii = ii + 1
 
+# need to create functions and a main()
