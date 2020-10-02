@@ -41,7 +41,7 @@ while ii+1 < len(lst):
 from Bio import Align
 import pandas as pd
 
-def param(xx, yy, zz, qq, cc):
+def param(lst, xx, yy, zz, qq, cc):
     # create the aligner object
     aligner = Align.PairwiseAligner()
 
@@ -67,8 +67,8 @@ def param(xx, yy, zz, qq, cc):
         #alignments = aligner.align(X,Y)
         newLst = []
         if adjustedScore >= cc:
-            newLst.append(list(X,":", Y, adjustedScore))
-            newLst.sort(reverse=True)
+            newLst.append(adjustedScore)
+
         ii = ii + 1
     return newLst
 
@@ -77,12 +77,16 @@ def main(inputFile):
     df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
     lst = df.iloc[1:, 0].tolist()
     
-    xx = input("Please enter the score for a matching character: ")
-    yy = input("Please enter the penalty for mismatched characters: ")
-    zz = input("Please enter the penalty for the opening of a gap: ")
-    qq = input("Please enter the penalty for the continuation of a gap: ")
+    xx = float(input("Please enter the score for a matching character: "))
+    yy = float(input("Please enter the penalty for mismatched characters: ")) * - 1
+    zz = float(input("Please enter the penalty for the opening of a gap: ")) * - 1
+    qq = float(input("Please enter the penalty for the continuation of a gap: ")) * - 1
 
-    cc = input("Please input the cut off percentage: ")
+    cc = float(input("Please input the cut off percentage: "))
 
-    output = param(xx, yy, zz, qq, cc)
+    output = param(lst, xx, yy, zz, qq, cc)
     print(output)
+
+if __name__ == '__main__':
+    main('all.tsv')
+
