@@ -37,4 +37,8 @@ while ii+1 < len(lst):
         print(len(lst))
     ii = ii + 1
 
-# need to create functions and a main()
+def main():
+    xx = input("Please enter the score for a matching character: ")
+    yy = input("Please enter the penalty for mismatched characters: ")
+    zz = input("Please enter the penalty for the opening of a gap: ")
+    qq = input("Please enter the penalty for the continuation of a gap: ")
