@@ -10,8 +10,12 @@ def param(lst, xx, yy, zz, qq, cc):
     aligner.open_gap_score = zz
     aligner.gap_score = qq
 
-    for label, rows in lst[0:50].iterrows():
-        print(label)
+def alignment(cdr3_1, cdr3_2):
+    aligner = Align.PairwiseAligner()
+    score = aligner.score(cdr3_1,cdr3_2)
+    denom = max(len(cdr3_1), len(cdr3_2))
+    adjustedScore = score / denom
+    return adjustedScore
         
         
 
