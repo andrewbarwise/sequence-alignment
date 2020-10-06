@@ -24,18 +24,19 @@ def param(lst, xx, yy, zz, qq, cc):
         # obtain a % of similarity
         adjustedScore = score / denom 
 
-        list1 = []
+        
         if adjustedScore >= cc:
             print(X, ':', Y, '=', adjustedScore)
 
         ii = ii + 1
-    print(list1)   
+    
         
 
 def main(inputFile):
     # read in the data
     df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
     lst = df.iloc[1:, 0].tolist()
+    
     
     xx = float(input("Please enter the score for a matching character: "))
     yy = float(input("Please enter the penalty for mismatched characters: ")) * - 1
