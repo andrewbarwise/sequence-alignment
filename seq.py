@@ -44,6 +44,8 @@ def main(inputFile):
     cc = float(input("Please input the cut off percentage: "))
 
     param(lst, xx, yy, zz, qq, cc)
+
+    input("Press enter to exit ;)")
     
 if __name__ == '__main__':
     main('all.tsv')
