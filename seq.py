@@ -24,11 +24,12 @@ def param(lst, xx, yy, zz, qq, cc):
         # obtain a % of similarity
         adjustedScore = score / denom 
 
-        
+        list1 = []
         if adjustedScore >= cc:
-            print(X, ":", Y, '=', adjustedScore)
+            print(X, ':', Y, '=', adjustedScore)
 
         ii = ii + 1
+    print(list1)   
         
 
 def main(inputFile):
