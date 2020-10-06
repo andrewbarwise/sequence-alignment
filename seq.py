@@ -10,32 +10,23 @@ def param(lst, xx, yy, zz, qq, cc):
     aligner.open_gap_score = zz
     aligner.gap_score = qq
 
-    ii = 0
-    while ii+1 < len(lst):
-        X = lst[ii]
-        Y = lst[ii + 1]
-    
-        #obtain the score
-        score = aligner.score(X,Y)
-    
-        # obtain the the variable of greatest length
-        denom = max(len(X),len(Y))
-    
-        # obtain a % of similarity
-        adjustedScore = score / denom 
-
+    for label, rows in lst[0:50].iterrows():
+        print(label)
         
-        if adjustedScore >= cc:
-            print(X, ":", Y, '=', adjustedScore)
-
-        ii = ii + 1
         
 
 def main(inputFile):
     # read in the data
     df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
-    lst = df.iloc[1:, 0].tolist()
+    lst1 = df.iloc[1:, 0].tolist()
+    lst2 = df.iloc[1:, 3].tolist()
     
+    # create a dataframe
+    lst = pd.DataFrame(
+        {'CDR3':lst1,
+        'patient':lst2}
+    )
+
     xx = float(input("Please enter the score for a matching character: "))
     yy = float(input("Please enter the penalty for mismatched characters: ")) * - 1
     zz = float(input("Please enter the penalty for the opening of a gap: ")) * - 1
@@ -44,6 +35,7 @@ def main(inputFile):
     cc = float(input("Please input the cut off percentage: "))
 
     param(lst, xx, yy, zz, qq, cc)
+    
 
     input("Press enter to exit ;)")
     
