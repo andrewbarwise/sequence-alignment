@@ -28,7 +28,7 @@ def similarity():
 
     return similarity_df
 
-def fileInput();
+def main(inputFile):
     if os.path.isfile(inputFile):
         # read in the data
         df = pd.read_csv(inputFile, header=None, delimiter=r"\s+")
@@ -40,8 +40,9 @@ def fileInput();
             {'CDR3':lst1,
             'patient':lst2}
         )
+        return lst
     else:
-        print("The incorect file has been entered")    
+        print("The incorrect file has been entered")    
         return
 
 def main(inputFile):
