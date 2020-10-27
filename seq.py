@@ -82,6 +82,57 @@ def plotDendo(inputFile):
 
 def main(inputFile):
     createDF(inputFile)
+=======
+
+    lst = pd.DataFrame(
+        {'CDR3':lst1,
+        'patient':lst2}
+    )
+    # create a new column and remove first 4 characters from CDR3 string for computation
+    lst['CDR3_Alt'] = lst['CDR3'].str[4:]
+    return lst
+
+# create a similarity matrix and fill with the pairwise scores
+def simMat(inputFile):
+    # create empty similarity matrix
+    similarity_df = pd.DataFrame()
+    
+    # call createDF()
+    lst = createDF(inputFile)
+    
+    # for each line compare the CDR3
+    for index_1, row_1 in lst.iterrows():
+        for index_2, row_2 in lst.iterrows():
+            similarity_score = alignment(lst.at[index_1,'CDR3_Alt'], lst.at[index_2,'CDR3_Alt'])
+            similarity_df.loc[lst.at[index_1,'CDR3'],lst.at[index_2,'CDR3']] = similarity_score
+
+    print(similarity_df)
+    linked = linkage(similarity_df, 'ward')
+    return linked
+
+# plot a dendogram using the similarity matrix
+def plotDendo(inputFile):
+    linked = simMat(inputFile)
+    plt.figure(figsize=(15, 12))
+    plt.title("Sequence Alignment Dendogram")
+    dendrogram(
+                linked,
+                truncate_mode= 'level',
+                orientation='right',
+                # need to add labels to the dendogram
+                distance_sort='descending',
+                show_leaf_counts=False
+            )
+    plt.show()
+
+# compute similarity scores
+def simScore():
+
+
+
+def main(inputFile):
+    createDF(inputFile)
+    simMat(inputFile)
     plotDendo(inputFile)
     input("Press enter to exit ;)")
     
