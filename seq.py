@@ -16,8 +16,8 @@ def alignment(cdr3_1, cdr3_2):
 # creates a data frame to hold the observations 
 def createDF(inputFile):
     df = pd.read_csv('all.tsv', header=None, delimiter=r"\s+")
-    lst1 = df.iloc[24026:28727, 0].tolist()
-    lst2 = df.iloc[24026:28727, 3].tolist()
+    lst1 = df.iloc[1:100, 0].tolist()
+    lst2 = df.iloc[1:100, 3].tolist()
 
     lst = pd.DataFrame(
         {'CDR3':lst1,
@@ -52,26 +52,36 @@ def plotDendo(inputFile):
     plt.title("Sequence Alignment Dendogram")
     dendrogram(
                 linked,
-                truncate_mode= 'level',
+                truncate_mode= 'lastp',
+                p=20,
                 orientation='right',
-                # need to add labels to the dendogram
+                #labels=True,
                 distance_sort='descending',
-                show_leaf_counts=False
+                show_leaf_counts=False,
+                
             )
     plt.show()
 
 # compute similarity scores
-#def simScore():
-
+def simScore(inputFile):
+    # call createDF()
+    lst = createDF(inputFile)
+    for index_1, row_1 in lst.iterrows():
+        for index_2, row_2 in lst.iterrows():
+            simScore = alignment(lst.at[index_1,'CDR3_Alt'], lst.at[index_2,'CDR3_Alt'])
+            if simScore >= 0.83:
+                print(simScore)
 
 
 def main(inputFile):
     createDF(inputFile)
     simMat(inputFile)
     plotDendo(inputFile)
+    #simScore(inputFile)
     input("Press enter to exit ;)")
     
 if __name__ == '__main__':   
     main('all.tsv')
 
-# hello world use visual studio
+# need to do : i) label dendogram ii) implement a cutoff score for dendogram iii) labels for simScore()
+# iv) why is the output different for simScore() and simMat()?
