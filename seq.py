@@ -16,8 +16,8 @@ def alignment(cdr3_1, cdr3_2):
 # creates a data frame to hold the observations 
 def createDF(inputFile):
     df = pd.read_csv('all.tsv', header=None, delimiter=r"\s+")
-    lst1 = df.iloc[1:100, 0].tolist()
-    lst2 = df.iloc[1:100, 3].tolist()
+    lst1 = df.iloc[1:40, 0].tolist()
+    lst2 = df.iloc[1:40, 3].tolist()
 
     lst = pd.DataFrame(
         {'CDR3':lst1,
@@ -47,41 +47,43 @@ def simMat(inputFile):
 
 # plot a dendogram using the similarity matrix
 def plotDendo(inputFile):
-    linked = simMat(inputFile)
-    plt.figure(figsize=(15, 12))
-    plt.title("Sequence Alignment Dendogram")
-    dendrogram(
-                linked,
-                truncate_mode= 'lastp',
-                p=20,
-                orientation='right',
-                #labels=True,
-                distance_sort='descending',
-                show_leaf_counts=False,
-                
-            )
-    plt.show()
-
-# compute similarity scores
-def simScore(inputFile):
     # call createDF()
     lst = createDF(inputFile)
-    for index_1, row_1 in lst.iterrows():
-        for index_2, row_2 in lst.iterrows():
-            simScore = alignment(lst.at[index_1,'CDR3_Alt'], lst.at[index_2,'CDR3_Alt'])
-            if simScore >= 0.83:
-                print(simScore)
-
+    
+    linked = simMat(inputFile)
+    
+    labels = lst['CDR3'].tolist()
+    p = len(labels)
+    
+    plt.figure(figsize=(15, 10))
+    plt.title("Sequence Alignment Dendogram")
+    R = dendrogram(
+                linked,
+                truncate_mode= 'lastp',
+                p=p,
+                no_plot=True,   
+            )
+    # create a label dictionary
+    temp ={R['leaves'][ii]: labels[ii] for ii in range(len(R['leaves']))}
+    def llf(xx):
+        return "{}".format(temp[xx])
+    
+    dendrogram(
+        linked,
+        truncate_mode='lastp',
+        p=p,
+        leaf_label_func=llf,
+        leaf_rotation= 90.,
+        leaf_font_size=16.,
+        show_contracted=True,
+    )
+    plt.tight_layout()
+    plt.savefig('fig1.png')
 
 def main(inputFile):
     createDF(inputFile)
-    simMat(inputFile)
     plotDendo(inputFile)
-    #simScore(inputFile)
     input("Press enter to exit ;)")
     
 if __name__ == '__main__':   
     main('all.tsv')
-
-# need to do : i) label dendogram ii) implement a cutoff score for dendogram iii) labels for simScore()
-# iv) why is the output different for simScore() and simMat()?
