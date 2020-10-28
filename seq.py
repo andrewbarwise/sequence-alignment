@@ -16,8 +16,8 @@ def alignment(cdr3_1, cdr3_2):
 # creates a data frame to hold the observations 
 def createDF(inputFile):
     df = pd.read_csv('all.tsv', header=None, delimiter=r"\s+")
-    lst1 = df.iloc[24026:28727, 0].tolist()
-    lst2 = df.iloc[24026:28727, 3].tolist()
+    lst1 = df.iloc[171832:171968, 0].tolist()
+    lst2 = df.iloc[171832:171968, 3].tolist()
 
     lst = pd.DataFrame(
         {'CDR3':lst1,
@@ -55,8 +55,8 @@ def plotDendo(inputFile):
     labels = lst['CDR3'].tolist()
     p = len(labels)
     
-    plt.figure(figsize=(15, 10))
-    plt.title("Sequence Alignment Dendogram")
+    plt.figure(figsize=(30, 15))
+
     R = dendrogram(
                 linked,
                 truncate_mode= 'lastp',
