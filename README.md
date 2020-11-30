@@ -11,4 +11,6 @@ A list of updates/ upgrades that need to be built into the code:
   
   iv) use a csv file which holds weighted values to better compute pairwise scores for the amino acids
   
+  v) split 'all.tsv' into smaller files that hold each subjects data
+  
   
