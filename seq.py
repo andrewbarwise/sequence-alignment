@@ -103,9 +103,9 @@ def comp(inputFile):
 
 
 def main(inputFile):
-    comp(inputFile)
+    #comp(inputFile)
     #createDF(inputFile)
-    #plotDendo(inputFile)
+    plotDendo(inputFile)
     #simMat(inputFile)
     input("Press enter to exit ;)")
     
